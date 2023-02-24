@@ -1,7 +1,6 @@
 package com.driver;
 
 
-
 public class Email {
 
     private String emailId;
@@ -27,31 +26,29 @@ public class Email {
         // 3. It contains at least one lowercase letter
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
-        boolean containsUpperCase=false;
-        boolean containsLowerCase=false;
-        boolean containsADigit=false;
-        boolean containsSpecialChar=false;
-        if(oldPassword.equals(this.password)){
-
-            if(newPassword.length()<8) return; //checks if it contains atleat 8 characters
-
-            for(char c:newPassword.toCharArray()){
-                if(c>='A' && c<='Z') containsUpperCase=true;
-
-                if(c>='a' && c<='z') containsLowerCase=true;
-
-                if(c>='0' && c<='9') containsADigit=true;
-
-                if(!(c>='0' && c<='9') && !(c>='a' && c<='z') && !(c>='A' && c<='Z') ) containsSpecialChar=true;
+        boolean flagUp = false, flagLow = false, flagDig = false, flagSpcl = false;
+        if (this.password.equals(oldPassword)){
+            if (newPassword.length() >= 8){
+                for (int i=0; i<newPassword.length(); i++){
+                    char chr = newPassword.charAt(i);
+                    if (chr >= 65 && chr <= 90){
+                        flagUp = true;
+                    }
+                    else if (chr >= 97 && chr <= 122){
+                        flagLow = true;
+                    }
+                    else if (chr >= 48 && chr <=57){
+                        flagDig = true;
+                    }
+                    else{
+                        flagSpcl = true;
+                    }
+                    if (flagUp && flagLow && flagDig && flagSpcl){
+                        this.password = newPassword;
+                        break;
+                    }
+                }
             }
-
-            //all criterials satisfied then change password
-            if(containsUpperCase && containsLowerCase && containsADigit && containsSpecialChar){
-
-                this.password=newPassword;
-            }
-            else return;
-
         }
     }
 }
